@@ -20,7 +20,8 @@ export default class Card extends React.Component {
                     <label className="text-center text-dark" style={{ width: '100%', fontSize: '15px'}}>Response will be shown on your browser network stack.</label> 
                 </div>
             </React.Fragment>
-        )
+        ) 
+        
     }
 
     doJob = () => {
