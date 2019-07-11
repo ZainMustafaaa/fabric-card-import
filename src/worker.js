@@ -26,7 +26,7 @@ export default class Card extends React.Component {
     doJob = () => {
         const _uuid = uuid();
         
-        axios.post('http://139.59.130.226:3001/api/AddCarrier', {
+        axios.post('http://YOUR_IP/api/AddCarrier', {
             "$class": "org.shipping.bitnautic.AddCarrier",
             "addCarrier": {
             "$class": "org.shipping.bitnautic.Carrier",
@@ -48,11 +48,11 @@ export default class Card extends React.Component {
         }).then(res => {
             this.agentTransaction = String(res['data'].transactionId);
             console.log(this.agentTransaction)
-            axios.get('http://139.59.130.226:3002/jwt/login').then(_res => {
+            axios.get('http://YOUR_IP/jwt/login').then(_res => {
 
                 const key = _res.data['access_token'];
                 
-                axios.post('http://139.59.130.226:3001/api/system/identities/issue', {
+                axios.post('http://YOUR_IP/api/system/identities/issue', {
                     "participant": `org.shipping.bitnautic.Carrier#${_uuid}`,
                     "userID": _uuid
                 }, {headers: { 'Content-Type': 'application/json' , 'Accept': 'application/octet-stream'}, observe: 'response', responseType: 'arraybuffer' }).then(response => {
@@ -60,7 +60,7 @@ export default class Card extends React.Component {
                     
                     const form = new FormData();
                     form.append('card',  certificate);
-                    axios.post(`http://139.59.130.226:3004/api/wallet/import?name=identity&access_token=${key}`, form, {observe: 'response'})
+                    axios.post(`http://YOUR_IP/api/wallet/import?name=identity&access_token=${key}`, form, {observe: 'response'})
                     .then(data => { 
                     }).catch(e=>{console.log(e)})
                 })
